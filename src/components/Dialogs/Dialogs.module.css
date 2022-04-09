@@ -8,12 +8,9 @@
 
 }
 
-.dialog {
-
-}
-.dialogsSection .activeD {
-    color: gold;
-    font-weight: bold;
+.dialog a{
+    color: black;
+    text-decoration: none;
 }
 
 .messagesSection {
