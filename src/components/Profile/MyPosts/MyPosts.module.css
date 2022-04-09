@@ -1,0 +1,14 @@
+.myPostWrapper {
+    padding: 10px;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px 0px;
+    margin-bottom: 5px;
+}
+
+.posts {
+    margin-top: 10px;
+}

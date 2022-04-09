@@ -4,11 +4,15 @@ import { Post } from './Post/Post'
 
 export const MyPosts = () => {
     return (
-        <div>
-            My posts
+        <div className={style.myPostWrapper}>
+            <h3>My posts</h3>
             <div>
-                <textarea name="" id="" cols={30} rows={10}></textarea>
-                <button>Add post</button>
+                <div>
+                    <textarea name="" id="" cols={40} rows={5}></textarea>
+                </div>
+                <div>
+                    <button>Add post</button>
+                </div>
             </div>
             <div className={style.posts}>
                 <Post message="Hi, what's up?" likeCount={15} />

@@ -2,33 +2,52 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import style from './Dialogs.module.css'
 
+type DialogPropsType = {
+    name: string
+    id: string
+}
+
+const Dialog = (props: DialogPropsType) => {
+    let path = `/dialogs/${props.id}`
+
+    return (
+        <div>
+            <div className={style.dialog}>
+                <NavLink to={path} activeClassName={style.active}>
+                    {props.name}
+                </NavLink>
+            </div>
+        </div>
+    )
+}
+
+type MessagePropsType = {
+    message: string
+}
+
+const Message = (props: MessagePropsType) => {
+    return (
+        <div>
+            <div className={style.message}>{props.message}</div>
+        </div>
+    )
+}
+
 export const Dialogs = () => {
     return (
         <div className={style.dialogsPageWrapper}>
             <div className={style.dialogsSection}>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/1">William</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/2">Rita</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/3">Leo</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/4">Mia</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/5">Monika</NavLink>
-                </div>
+                <Dialog name={'William'} id={'1'} />
+                <Dialog name={'Rita'} id={'2'} />
+                <Dialog name={'Leo'} id={'3'} />
+                <Dialog name={'Mia'} id={'4'} />
+                <Dialog name={'Monika'} id={'5'} />
             </div>
             <div className={style.messagesSection}>
-                <div className={style.message}>Hi, check it out!</div>
-                <div className={style.message}>Wow, nice to see you...</div>
-                <div className={style.message}>
-                    Where have you been all this time?
-                </div>
-                <div className={style.message}>I just arrived from Miami!</div>
+                <Message message={'Hi, check it out!'} />
+                <Message message={'Wow, nice to see you...'} />
+                <Message message={'Where have you been all this time?'} />
+                <Message message={'I just arrived from Miami!'} />
             </div>
         </div>
     )
