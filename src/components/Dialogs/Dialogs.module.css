@@ -1,0 +1,25 @@
+.dialogsPageWrapper {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    padding: 10px;
+}
+
+.dialogsSection {
+
+}
+
+.dialog {
+
+}
+.dialogsSection .activeD {
+    color: gold;
+    font-weight: bold;
+}
+
+.messagesSection {
+
+}
+
+.message {
+
+}
