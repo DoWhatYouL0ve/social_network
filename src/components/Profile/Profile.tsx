@@ -2,8 +2,13 @@ import React from 'react'
 import style from './Profile.module.css'
 import { MyPosts } from './MyPosts/MyPosts'
 import { ProfileInfo } from './ProfileInfo/ProfileInfo'
+import { PostType } from '../../index'
 
-export const Profile = () => {
+type ProfilePropsType = {
+    posts: Array<PostType>
+}
+
+export const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo />
