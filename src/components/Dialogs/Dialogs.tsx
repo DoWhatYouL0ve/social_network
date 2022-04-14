@@ -22,6 +22,7 @@ const Dialog = (props: DialogPropsType) => {
 }
 
 type MessagePropsType = {
+    id: string
     message: string
 }
 
@@ -33,21 +34,41 @@ const Message = (props: MessagePropsType) => {
     )
 }
 
-export const Dialogs = () => {
+type DialogsDataType = Array<{ id: string; name: string }>
+type MessagesArrayDataType = {
+    id: string
+    message: string
+}
+type MessagesDataType = Array<MessagesArrayDataType>
+type DialogsPropsType = DialogsDataType & MessagesDataType
+
+export const Dialogs = (props: DialogsPropsType) => {
+    const dialogsData: DialogsDataType = [
+        { id: '1', name: 'William' },
+        { id: '2', name: 'Rita' },
+        { id: '3', name: 'Leo' },
+        { id: '4', name: 'Mia' },
+        { id: '5', name: 'Monika' },
+    ]
+
+    const messagesData: MessagesDataType = [
+        { id: '1', message: 'Hi, check it out!' },
+        { id: '2', message: 'Wow, nice to see you...' },
+        { id: '3', message: 'Where have you been all this time?' },
+        { id: '4', message: 'I just arrived from Miami!' },
+    ]
+
     return (
         <div className={style.dialogsPageWrapper}>
             <div className={style.dialogsSection}>
-                <Dialog name={'William'} id={'1'} />
-                <Dialog name={'Rita'} id={'2'} />
-                <Dialog name={'Leo'} id={'3'} />
-                <Dialog name={'Mia'} id={'4'} />
-                <Dialog name={'Monika'} id={'5'} />
+                {dialogsData.map((d) => (
+                    <Dialog key={d.id} name={d.name} id={d.id} />
+                ))}
             </div>
             <div className={style.messagesSection}>
-                <Message message={'Hi, check it out!'} />
-                <Message message={'Wow, nice to see you...'} />
-                <Message message={'Where have you been all this time?'} />
-                <Message message={'I just arrived from Miami!'} />
+                {messagesData.map((m) => (
+                    <Message key={m.id} message={m.message} id={m.id} />
+                ))}
             </div>
         </div>
     )
