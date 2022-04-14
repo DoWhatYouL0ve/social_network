@@ -43,7 +43,7 @@ type MessagesDataType = Array<MessagesArrayDataType>
 type DialogsPropsType = DialogsDataType & MessagesDataType
 
 export const Dialogs = (props: DialogsPropsType) => {
-    const dialogsData: DialogsDataType = [
+    let dialogs: DialogsDataType = [
         { id: '1', name: 'William' },
         { id: '2', name: 'Rita' },
         { id: '3', name: 'Leo' },
@@ -51,25 +51,25 @@ export const Dialogs = (props: DialogsPropsType) => {
         { id: '5', name: 'Monika' },
     ]
 
-    const messagesData: MessagesDataType = [
+    let messages: MessagesDataType = [
         { id: '1', message: 'Hi, check it out!' },
         { id: '2', message: 'Wow, nice to see you...' },
         { id: '3', message: 'Where have you been all this time?' },
         { id: '4', message: 'I just arrived from Miami!' },
     ]
 
+    let dialogsElements = dialogs.map((d) => (
+        <Dialog key={d.id} name={d.name} id={d.id} />
+    ))
+
+    let messagesElements = messages.map((m) => (
+        <Message key={m.id} message={m.message} id={m.id} />
+    ))
+
     return (
         <div className={style.dialogsPageWrapper}>
-            <div className={style.dialogsSection}>
-                {dialogsData.map((d) => (
-                    <Dialog key={d.id} name={d.name} id={d.id} />
-                ))}
-            </div>
-            <div className={style.messagesSection}>
-                {messagesData.map((m) => (
-                    <Message key={m.id} message={m.message} id={m.id} />
-                ))}
-            </div>
+            <div className={style.dialogsSection}>{dialogsElements}</div>
+            <div className={style.messagesSection}>{messagesElements}</div>
         </div>
     )
 }

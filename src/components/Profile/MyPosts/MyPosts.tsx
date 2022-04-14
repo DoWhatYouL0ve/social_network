@@ -1,13 +1,22 @@
 import React from 'react'
 import style from './MyPosts.module.css'
-import { Post } from './Post/Post'
+import { Post, PostType } from './Post/Post'
 
 export const MyPosts = () => {
-    const postData = [
+    let posts: Array<PostType> = [
         { id: '1', message: "Hi, what's up?", likeCount: 15 },
         { id: '2', message: "Hello, I'm great and you?", likeCount: 6 },
         { id: '3', message: 'Perfect!', likeCount: 8 },
     ]
+
+    let postsElements = posts.map((p) => (
+        <Post
+            key={p.id}
+            id={p.id}
+            message={p.message}
+            likeCount={p.likeCount}
+        />
+    ))
 
     return (
         <div className={style.myPostWrapper}>
@@ -20,16 +29,7 @@ export const MyPosts = () => {
                     <button>Add post</button>
                 </div>
             </div>
-            <div className={style.posts}>
-                {postData.map((p) => (
-                    <Post
-                        key={p.id}
-                        id={p.id}
-                        message={p.message}
-                        likeCount={p.likeCount}
-                    />
-                ))}
-            </div>
+            <div className={style.posts}>{postsElements}</div>
         </div>
     )
 }
