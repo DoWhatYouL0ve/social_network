@@ -12,6 +12,7 @@ import { StateType } from './redux/state'
 
 type AppPropsType = {
     appState: StateType
+    addPost: (postMessage: string) => void
 }
 
 const App = (props: AppPropsType) => {
@@ -23,7 +24,10 @@ const App = (props: AppPropsType) => {
                 <Route
                     path={'/profile'}
                     render={() => (
-                        <Profile state={props.appState.profilePage} />
+                        <Profile
+                            state={props.appState.profilePage}
+                            addPost={props.addPost}
+                        />
                     )}
                 />
                 <Route

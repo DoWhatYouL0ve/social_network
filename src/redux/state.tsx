@@ -45,3 +45,8 @@ export let applicationState: StateType = {
         ],
     },
 }
+
+export let addPost = (postMessage: string) => {
+    let newPost = { id: '4', message: postMessage, likeCount: 0 }
+    applicationState.profilePage.posts.push(newPost)
+}
