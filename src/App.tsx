@@ -16,30 +16,27 @@ type AppPropsType = {
 
 const App = (props: AppPropsType) => {
     return (
-        // BrowserRouter - for all links to work properly
-        <BrowserRouter>
-            <div className="App">
-                <Header />
-                <Navbar />
-                <div className="appWrapperContent">
-                    <Route
-                        path={'/profile'}
-                        render={() => (
-                            <Profile state={props.appState.profilePage} />
-                        )}
-                    />
-                    <Route
-                        path={'/dialogs'}
-                        render={() => (
-                            <Dialogs state={props.appState.dialogsPage} />
-                        )}
-                    />
-                    <Route path={'/news'} render={() => <News />} />
-                    <Route path={'/music'} render={() => <Music />} />
-                    <Route path={'/settings'} render={() => <Settings />} />
-                </div>
+        <div className="App">
+            <Header />
+            <Navbar />
+            <div className="appWrapperContent">
+                <Route
+                    path={'/profile'}
+                    render={() => (
+                        <Profile state={props.appState.profilePage} />
+                    )}
+                />
+                <Route
+                    path={'/dialogs'}
+                    render={() => (
+                        <Dialogs state={props.appState.dialogsPage} />
+                    )}
+                />
+                <Route path={'/news'} render={() => <News />} />
+                <Route path={'/music'} render={() => <Music />} />
+                <Route path={'/settings'} render={() => <Settings />} />
             </div>
-        </BrowserRouter>
+        </div>
     )
 }
 
