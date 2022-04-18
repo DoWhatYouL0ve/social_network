@@ -1,3 +1,5 @@
+import { rerenderEntireTree } from '../render'
+
 export type DialogsDataType = Array<{ id: string; name: string }>
 export type MessagesArrayDataType = {
     id: string
@@ -49,4 +51,5 @@ export let applicationState: StateType = {
 export let addPost = (postMessage: string) => {
     let newPost = { id: '4', message: postMessage, likeCount: 0 }
     applicationState.profilePage.posts.push(newPost)
+    rerenderEntireTree(applicationState)
 }
