@@ -12,7 +12,8 @@ import { StateType } from './redux/state'
 
 type AppPropsType = {
     appState: StateType
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 const App = (props: AppPropsType) => {
@@ -27,6 +28,7 @@ const App = (props: AppPropsType) => {
                         <Profile
                             state={props.appState.profilePage}
                             addPost={props.addPost}
+                            updateNewPostText={props.updateNewPostText}
                         />
                     )}
                 />

@@ -5,11 +5,39 @@
     padding: 20px;
 }
 
+.item {
+    margin-bottom: 20px;
+}
+
 .item a{
     color: white;
     text-decoration: none;
+    font-size: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+
+}
+
+.item a::before {
+    position: absolute;
+    content: attr(data-content);
+    color: gold;
+    clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
+    transition: clip-path 275ms ease;
+
+}
+
+.item a:hover::before {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .item a.active{
     color: gold;
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
 }
