@@ -1,5 +1,3 @@
-import { rerenderEntireTree } from '../render'
-
 export type DialogsDataType = Array<{ id: string; name: string }>
 export type MessagesArrayDataType = {
     id: string
@@ -23,6 +21,8 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePagePostsType
 }
+
+let rerenderEntireTree = (applicationState: StateType) => {}
 
 export let applicationState: StateType = {
     dialogsPage: {
@@ -50,7 +50,7 @@ export let applicationState: StateType = {
     },
 }
 
-export let addPost = () => {
+export const addPost = () => {
     let newPost = {
         id: '4',
         message: applicationState.profilePage.newPostText,
@@ -61,7 +61,11 @@ export let addPost = () => {
     rerenderEntireTree(applicationState)
 }
 
-export let updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newText: string) => {
     applicationState.profilePage.newPostText = newText
     rerenderEntireTree(applicationState)
+}
+
+export const subscribe = (observer: (applicationState: StateType) => void) => {
+    rerenderEntireTree = observer
 }
