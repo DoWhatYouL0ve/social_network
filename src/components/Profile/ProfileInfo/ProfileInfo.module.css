@@ -1,3 +1,8 @@
 .avaDescriptionWrapper {
     padding: 10px;
 }
+
+.profileInfoBackground img{
+    max-width: 1000px;
+    height: 300px;
+}

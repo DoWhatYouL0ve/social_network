@@ -1,14 +1,12 @@
 import React from 'react'
 import style from './ProfileInfo.module.css'
+import beach from './../../images/beach.jpg'
 
 export const ProfileInfo = () => {
     return (
         <div>
-            <div>
-                <img
-                    src="https://www.lovehappensmag.com/blog/wp-content/uploads/2016/06/Most-beautiful-beaches-slider-1.jpg"
-                    alt=""
-                />
+            <div className={style.profileInfoBackground}>
+                <img src={beach} alt="" />
             </div>
             <div className={style.avaDescriptionWrapper}>ava + description</div>
         </div>
