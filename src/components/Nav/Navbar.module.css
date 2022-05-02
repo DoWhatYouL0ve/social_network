@@ -18,7 +18,7 @@
     position: relative;
     display: inline-block;
     overflow: hidden;
-
+    transition: 500ms linear;
 }
 
 .item a::before {

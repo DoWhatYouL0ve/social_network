@@ -8,15 +8,14 @@ import { Route } from 'react-router-dom'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
-import { StateType } from './redux/state'
+import { StorePropsType } from './redux/state'
 
 type AppPropsType = {
-    appState: StateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    store: StorePropsType
 }
 
 const App = (props: AppPropsType) => {
+    const state = props.store.getState()
     return (
         <div className="App">
             <Header />
@@ -26,17 +25,17 @@ const App = (props: AppPropsType) => {
                     path={'/profile'}
                     render={() => (
                         <Profile
-                            state={props.appState.profilePage}
-                            addPost={props.addPost}
-                            updateNewPostText={props.updateNewPostText}
+                            state={state.profilePage}
+                            addPost={props.store.addPost.bind(props.store)}
+                            updateNewPostText={props.store.updateNewPostText.bind(
+                                props.store
+                            )}
                         />
                     )}
                 />
                 <Route
                     path={'/dialogs'}
-                    render={() => (
-                        <Dialogs state={props.appState.dialogsPage} />
-                    )}
+                    render={() => <Dialogs state={state.dialogsPage} />}
                 />
                 <Route path={'/news'} render={() => <News />} />
                 <Route path={'/music'} render={() => <Music />} />

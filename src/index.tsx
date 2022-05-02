@@ -3,29 +3,19 @@ import ReactDOM from 'react-dom'
 import './reset.css'
 import './index.css'
 import App from './App'
-import {
-    addPost,
-    applicationState,
-    StateType,
-    subscribe,
-    updateNewPostText,
-} from './redux/state'
+import { StateType, store } from './redux/state'
 import { BrowserRouter } from 'react-router-dom'
 
-let rerenderEntireTree = (applicationState: StateType) => {
+let rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         // BrowserRouter - for all links to work properly
         <BrowserRouter>
-            <App
-                appState={applicationState}
-                addPost={addPost}
-                updateNewPostText={updateNewPostText}
-            />
+            <App store={store} />
         </BrowserRouter>,
         document.getElementById('root')
     )
 }
 
-rerenderEntireTree(applicationState)
+rerenderEntireTree(store.getState())
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
