@@ -21,14 +21,13 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePagePostsType
 }
-export type AddPostActionType = {
-    type: 'ADD_POST'
-}
-export type UpdateNewPostTestActionType = {
-    type: 'UPDATE_NEW_POST_TEXT'
-    newText: string
-}
-export type ActionType = UpdateNewPostTestActionType | AddPostActionType
+const ADD_POST = 'ADD_POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+//action types, due to that always add 'as const' in the AC functions, examples below
+export type ActionType =
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addPostAC>
+
 export type StorePropsType = {
     _state: StateType
     _callSubscriber: (state: StateType) => void
@@ -86,3 +85,7 @@ export let store: StorePropsType = {
         }
     },
 }
+
+export const addPostAC = () => ({ type: ADD_POST } as const)
+export const updateNewPostTextAC = (newText: string) =>
+    ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
