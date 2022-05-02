@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './MyPosts.module.css'
 import { Post, PostType } from './Post/Post'
+import { ActionType } from '../../../redux/state'
 
 type MyPostsPropsType = {
     posts: Array<PostType>
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionType) => void
     newPostText: string
 }
 
@@ -23,14 +23,14 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     let addNewPost = () => {
         if (props.newPostText.trim() !== '') {
-            props.addPost()
+            props.dispatch({ type: 'ADD_POST' })
         }
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current?.value
-            props.updateNewPostText(text)
+            props.dispatch({ type: 'UPDATE_NEW_POST_TEXT', newText: text })
         }
     }
 

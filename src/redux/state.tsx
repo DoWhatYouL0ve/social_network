@@ -21,13 +21,20 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePagePostsType
 }
+export type AddPostActionType = {
+    type: 'ADD_POST'
+}
+export type UpdateNewPostTestActionType = {
+    type: 'UPDATE_NEW_POST_TEXT'
+    newText: string
+}
+export type ActionType = UpdateNewPostTestActionType | AddPostActionType
 export type StorePropsType = {
     _state: StateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
     _callSubscriber: (state: StateType) => void
     subscribe: (observer: (state: StateType) => void) => void
     getState: () => StateType
+    dispatch: (action: ActionType) => void
 }
 
 export let store: StorePropsType = {
@@ -57,24 +64,25 @@ export let store: StorePropsType = {
         },
     },
     _callSubscriber() {},
-    addPost() {
-        let newPost = {
-            id: '4',
-            message: this._state.profilePage.newPostText,
-            likeCount: 0,
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
     subscribe(observer) {
         this._callSubscriber = observer
     },
     getState() {
         return this._state
+    },
+    dispatch(action) {
+        if (action.type === 'ADD_POST') {
+            let newPost = {
+                id: '4',
+                message: this._state.profilePage.newPostText,
+                likeCount: 0,
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE_NEW_POST_TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
     },
 }
