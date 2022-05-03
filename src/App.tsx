@@ -32,7 +32,12 @@ const App = (props: AppPropsType) => {
                 />
                 <Route
                     path={'/dialogs'}
-                    render={() => <Dialogs state={state.dialogsPage} />}
+                    render={() => (
+                        <Dialogs
+                            state={state.dialogsPage}
+                            dispatch={props.store.dispatch.bind(props.store)}
+                        />
+                    )}
                 />
                 <Route path={'/news'} render={() => <News />} />
                 <Route path={'/music'} render={() => <Music />} />
