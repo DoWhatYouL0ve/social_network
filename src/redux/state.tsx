@@ -1,3 +1,14 @@
+import {
+    addPostAC,
+    profilePageReducer,
+    updateNewPostTextAC,
+} from './profilePageReducer'
+import {
+    dialogsPageReducer,
+    newMessageTextAC,
+    sendMessageAC,
+} from './dialogsPageReducer'
+
 export type DialogsDataType = Array<{ id: string; name: string }>
 export type MessagesArrayDataType = {
     id: string
@@ -22,10 +33,6 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePagePostsType
 }
-const ADD_POST = 'ADD_POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
-const SEND_MESSAGE = 'SEND_MESSAGE'
 //action types, due to that always add 'as const' in the AC functions, examples below
 export type ActionType =
     | ReturnType<typeof updateNewPostTextAC>
@@ -76,36 +83,14 @@ export let store: StorePropsType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === 'ADD_POST') {
-            let newPost = {
-                id: '4',
-                message: this._state.profilePage.newPostText,
-                likeCount: 0,
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE_NEW_POST_TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE_NEW_MESSAGE_TEXT') {
-            this._state.dialogsPage.newMessageText = action.newText
-            this._callSubscriber(this._state)
-        } else if (action.type === 'SEND_MESSAGE') {
-            let newMessage = {
-                id: '5',
-                message: this._state.dialogsPage.newMessageText,
-            }
-            this._state.dialogsPage.messages.push(newMessage)
-            this._state.dialogsPage.newMessageText = ''
-            this._callSubscriber(this._state)
-        }
+        this._state.profilePage = profilePageReducer(
+            this._state.profilePage,
+            action
+        )
+        this._state.dialogsPage = dialogsPageReducer(
+            this._state.dialogsPage,
+            action
+        )
+        this._callSubscriber(this._state)
     },
 }
-
-export const addPostAC = () => ({ type: ADD_POST } as const)
-export const updateNewPostTextAC = (newText: string) =>
-    ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
-export const newMessageTextAC = (newText: string) =>
-    ({ type: UPDATE_NEW_MESSAGE_TEXT, newText } as const)
-export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const)

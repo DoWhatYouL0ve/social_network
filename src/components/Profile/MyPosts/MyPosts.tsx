@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './MyPosts.module.css'
 import { Post, PostType } from './Post/Post'
+import { ActionType } from '../../../redux/state'
 import {
-    ActionType,
     addPostAC,
     updateNewPostTextAC,
-} from '../../../redux/state'
+} from '../../../redux/profilePageReducer'
 
 type MyPostsPropsType = {
     posts: Array<PostType>
