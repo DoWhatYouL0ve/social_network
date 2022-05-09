@@ -8,10 +8,10 @@ import { Route } from 'react-router-dom'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
-import { StorePropsType } from './redux/state'
+import { Store } from 'redux'
 
 type AppPropsType = {
-    store: StorePropsType
+    store: Store
 }
 
 const App = (props: AppPropsType) => {

@@ -1,46 +1,45 @@
 import {
     addPostAC,
+    ProfilePageActionType,
     profilePageReducer,
     updateNewPostTextAC,
 } from './profilePageReducer'
 import {
+    DialogsPageActionType,
     dialogsPageReducer,
     newMessageTextAC,
     sendMessageAC,
 } from './dialogsPageReducer'
 
-export type DialogsDataType = Array<{ id: string; name: string }>
-export type MessagesArrayDataType = {
+type DialogsDataType = Array<{ id: string; name: string }>
+type MessagesArrayDataType = {
     id: string
     message: string
 }
-export type MessagesDataType = Array<MessagesArrayDataType>
-export type PostType = {
+type MessagesDataType = Array<MessagesArrayDataType>
+type PostType = {
     id: string
     message: string
     likeCount: number
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: DialogsDataType
     messages: MessagesDataType
     newMessageText: string
 }
-export type ProfilePagePostsType = {
+type ProfilePagePostsType = {
     posts: Array<PostType>
     newPostText: string
 }
-export type StateType = {
+type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePagePostsType
 }
 //action types, due to that always add 'as const' in the AC functions, examples below
-export type ActionType =
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof newMessageTextAC>
-    | ReturnType<typeof sendMessageAC>
+// any just to avoid the conflict after dividing ActionTypes to direct reducers
+type ActionType = any
 
-export type StorePropsType = {
+type StorePropsType = {
     _state: StateType
     _callSubscriber: (state: StateType) => void
     subscribe: (observer: (state: StateType) => void) => void
@@ -48,7 +47,7 @@ export type StorePropsType = {
     dispatch: (action: ActionType) => void
 }
 
-export let store: StorePropsType = {
+let store: StorePropsType = {
     _state: {
         dialogsPage: {
             dialogs: [
