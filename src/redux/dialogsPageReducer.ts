@@ -3,7 +3,11 @@ export type DialogsPageType = {
     messages: MessagesDataType
     newMessageText: string
 }
-export type DialogsDataType = Array<{ id: string; name: string }>
+export type DialogsArrayDataType = {
+    id: string
+    name: string
+}
+export type DialogsDataType = Array<DialogsArrayDataType>
 export type MessagesArrayDataType = {
     id: string
     message: string

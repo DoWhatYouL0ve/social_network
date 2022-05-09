@@ -1,16 +1,12 @@
 import React from 'react'
 import style from './MyPosts.module.css'
 import { Post, PostType } from './Post/Post'
-import {
-    addPostAC,
-    ProfilePageActionType,
-    updateNewPostTextAC,
-} from '../../../redux/profilePageReducer'
 
 type MyPostsPropsType = {
     posts: Array<PostType>
-    dispatch: (action: ProfilePageActionType) => void
     newPostText: string
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -27,14 +23,14 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     let addNewPost = () => {
         if (props.newPostText.trim() !== '') {
-            props.dispatch(addPostAC())
+            props.addPost()
         }
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current?.value
-            props.dispatch(updateNewPostTextAC(text))
+            props.updateNewPostText(text)
         }
     }
 

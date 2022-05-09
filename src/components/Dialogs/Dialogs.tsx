@@ -2,39 +2,37 @@ import React, { ChangeEvent } from 'react'
 import style from './Dialogs.module.css'
 import { DialogItem } from './Dialog/DialogItem'
 import { MessageItem } from './Message/MessageItem'
-import {
-    DialogsPageActionType,
-    DialogsPageType,
-    newMessageTextAC,
-    sendMessageAC,
-} from '../../redux/dialogsPageReducer'
+import { DialogsPageType } from '../../redux/dialogsPageReducer'
 
 type DialogsPropsType = {
-    state: DialogsPageType
-    dispatch: (action: DialogsPageActionType) => void
+    dialogsPage: DialogsPageType
+    onMessageTextChanged: (text: string) => void
+    sendMessage: () => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
-    let dialogsElements = props.state.dialogs.map((d) => (
+    let dialogsElements = props.dialogsPage.dialogs.map((d) => (
         <DialogItem key={d.id} name={d.name} id={d.id} />
     ))
 
-    let messagesElements = props.state.messages.map((m) => (
+    let messagesElements = props.dialogsPage.messages.map((m) => (
         <MessageItem key={m.id} message={m.message} id={m.id} />
     ))
 
-    let newMessageText = props.state.newMessageText
+    let newMessageText = props.dialogsPage.newMessageText
 
-    const onMessageTextChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onMessageTextChangedHandler = (
+        e: ChangeEvent<HTMLTextAreaElement>
+    ) => {
         if (e.target.value) {
             let text = e.target.value
-            props.dispatch(newMessageTextAC(text))
+            props.onMessageTextChanged(text)
         }
     }
 
     const sendMessage = () => {
-        if (props.state.newMessageText.trim() !== '') {
-            props.dispatch(sendMessageAC())
+        if (props.dialogsPage.newMessageText.trim() !== '') {
+            props.sendMessage()
         }
     }
 
@@ -47,7 +45,7 @@ export const Dialogs = (props: DialogsPropsType) => {
                     <textarea
                         placeholder={'Enter your message'}
                         value={newMessageText}
-                        onChange={onMessageTextChanged}
+                        onChange={onMessageTextChangedHandler}
                         cols={30}
                         rows={5}
                     ></textarea>
