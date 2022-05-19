@@ -1,34 +1,41 @@
 import React from 'react'
 import {
     addPostAC,
+    ProfilePagePostsType,
     updateNewPostTextAC,
 } from '../../../redux/profilePageReducer'
 import { MyPosts } from './MyPosts'
-import { Store } from 'redux'
-import { StoreContext } from '../../../StoreContext'
+import { connect } from 'react-redux'
+import { StateType } from '../../../redux/redux-store'
+import { Dispatch } from 'redux'
 
-export const MyPostsContainer = () => {
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                let state = store.getState()
-                let addNewPost = () => {
-                    if (state.profilePage.newPostText.trim() !== '') {
-                        store.dispatch(addPostAC())
-                    }
-                }
-                let onPostChange = (text: string) => {
-                    store.dispatch(updateNewPostTextAC(text))
-                }
-                return (
-                    <MyPosts
-                        updateNewPostText={onPostChange}
-                        addPost={addNewPost}
-                        newPostText={state.profilePage.newPostText}
-                        posts={state.profilePage.posts}
-                    />
-                )
-            }}
-        </StoreContext.Consumer>
-    )
+type MapStateToPropsType = ProfilePagePostsType
+type MapDispatchToPropsType = {
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
+
+export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: StateType): MapStateToPropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText,
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        updateNewPostText: (text: string) => {
+            dispatch(updateNewPostTextAC(text))
+        },
+        addPost: () => {
+            dispatch(addPostAC())
+        },
+    }
+}
+
+export const MyPostsContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MyPosts)

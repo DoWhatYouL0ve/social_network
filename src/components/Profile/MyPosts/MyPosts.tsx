@@ -1,13 +1,7 @@
 import React from 'react'
 import style from './MyPosts.module.css'
-import { Post, PostType } from './Post/Post'
-
-type MyPostsPropsType = {
-    posts: Array<PostType>
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-}
+import { Post } from './Post/Post'
+import { MyPostsPropsType } from './MyPostsContainer'
 
 export const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map((p) => (

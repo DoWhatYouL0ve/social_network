@@ -40,7 +40,7 @@ let initialState: DialogsPageType = {
 export const dialogsPageReducer = (
     state: DialogsPageType = initialState,
     action: DialogsPageActionType
-) => {
+): DialogsPageType => {
     let newMessage = {
         id: '5',
         message: state.newMessageText,

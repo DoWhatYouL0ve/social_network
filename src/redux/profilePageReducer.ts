@@ -26,7 +26,7 @@ let initialState: ProfilePagePostsType = {
 export const profilePageReducer = (
     state: ProfilePagePostsType = initialState,
     action: ProfilePageActionType
-) => {
+): ProfilePagePostsType => {
     let newPost = {
         id: '4',
         message: state.newPostText,
