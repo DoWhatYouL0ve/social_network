@@ -25,6 +25,15 @@ export const Navbar = () => {
             </div>
             <div className={style.item}>
                 <NavLink
+                    to="/users"
+                    activeClassName={style.active}
+                    data-content={'USERS'}
+                >
+                    Users
+                </NavLink>
+            </div>
+            <div className={style.item}>
+                <NavLink
                     to="/news"
                     activeClassName={style.active}
                     data-content={'NEWS'}

@@ -5,10 +5,12 @@ import {
 } from 'redux'
 import { profilePageReducer } from './profilePageReducer'
 import { dialogsPageReducer } from './dialogsPageReducer'
+import { usersReducer } from './usersReducer'
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
+    usersPage: usersReducer,
 })
 
 export type StateType = ReturnType<typeof rootReducer>

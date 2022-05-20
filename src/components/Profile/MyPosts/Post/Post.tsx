@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './Post.module.css'
-import ava from './../../../images/ava.jpg'
+import ava from '../../../../images/ava.jpg'
 
 export type PostType = {
     id: string
