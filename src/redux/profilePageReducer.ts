@@ -32,14 +32,16 @@ export const profilePageReducer = (
         message: state.newPostText,
         likeCount: 0,
     }
+    let copyState = { ...state }
     switch (action.type) {
         case ADD_POST:
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
+            copyState.posts = [...state.posts]
+            copyState.posts.push(newPost)
+            copyState.newPostText = ''
+            return copyState
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+            copyState.newPostText = action.newText
+            return copyState
         default:
             return state
     }
