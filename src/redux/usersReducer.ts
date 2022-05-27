@@ -1,14 +1,13 @@
-export type LocationType = {
-    city: string
-    country: string
+export type UserPhotosType = {
+    small: string
+    large: string
 }
 export type UserType = {
-    userId: string
-    photoUrl: string
-    fullName: string
+    id: string
+    photos: UserPhotosType
+    name: string
     followed: boolean
     status: string
-    location: LocationType
 }
 export type UsersPageType = {
     users: Array<UserType>
@@ -35,14 +34,14 @@ export const usersReducer = (
             return {
                 ...state,
                 users: state.users.map((u) =>
-                    u.userId === action.userId ? { ...u, followed: true } : u
+                    u.id === action.userId ? { ...u, followed: true } : u
                 ),
             }
         case UNFOLLOW:
             return {
                 ...state,
                 users: state.users.map((u) =>
-                    u.userId === action.userId ? { ...u, followed: false } : u
+                    u.id === action.userId ? { ...u, followed: false } : u
                 ),
             }
         case SET_USERS:
