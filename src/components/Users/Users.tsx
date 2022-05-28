@@ -4,9 +4,12 @@ import style from './users.module.css'
 import image from './../../images/ava.jpg'
 import axios from 'axios'
 
-export class Users extends React.Component<UsersPropsType, any> {
+export class Users extends React.Component<UsersPropsType> {
     constructor(props: UsersPropsType) {
         super(props)
+    }
+
+    componentDidMount() {
         axios
             .get('https://social-network.samuraijs.com/api/1.0/users')
             .then((response) => {
@@ -14,15 +17,6 @@ export class Users extends React.Component<UsersPropsType, any> {
             })
     }
 
-    getUsers = () => {
-        if (this.props.users.users.length === 0) {
-            axios
-                .get('https://social-network.samuraijs.com/api/1.0/users')
-                .then((response) => {
-                    this.props.setUsers(response.data.items)
-                })
-        }
-    }
     render() {
         return (
             <div>
