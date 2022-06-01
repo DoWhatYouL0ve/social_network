@@ -11,15 +11,51 @@ export class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         axios
-            .get('https://social-network.samuraijs.com/api/1.0/users')
+            .get(
+                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+            )
+            .then((response) => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            })
+    }
+
+    onSetCurrentPage = (currentPage: number) => {
+        this.props.setCurrentPage(currentPage)
+        axios
+            .get(
+                `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`
+            )
             .then((response) => {
                 this.props.setUsers(response.data.items)
             })
     }
 
     render() {
+        let pagesCount = Math.ceil(
+            this.props.totalUsersCount / this.props.pageSize
+        )
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
         return (
             <div>
+                <div>
+                    {pages.map((p) => (
+                        <span
+                            onClick={() => this.onSetCurrentPage(p)}
+                            className={
+                                this.props.currentPage === p
+                                    ? `${style.pageNumber} ${style.selectedPage}`
+                                    : `${style.pageNumber}`
+                            }
+                            key={p}
+                        >
+                            {p}
+                        </span>
+                    ))}
+                </div>
                 {this.props.users.users.map((u) => (
                     <div key={u.id}>
                         <span>
