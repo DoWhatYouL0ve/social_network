@@ -1,14 +1,13 @@
 import React from 'react'
 import { StateType } from '../../redux/redux-store'
-import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import {
-    followAC,
-    setCurrentPageAC,
-    setToggleIsFetchingAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage,
+    setToggleIsFetching,
+    setTotalUsersCount,
+    setUsers,
+    unfollow,
     UsersPageType,
     UserType,
 } from '../../redux/usersReducer'
@@ -95,6 +94,9 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => {
         isFetching: state.usersPage.isFetching,
     }
 }
+
+//example of mapDispatchToProps
+/*
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         follow: (userId) => {
@@ -117,5 +119,13 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         },
     }
 }
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setToggleIsFetching,
+})(UsersContainer)

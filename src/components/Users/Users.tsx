@@ -23,7 +23,7 @@ export const Users = (props: UsersPropsType) => {
 
     return (
         <div>
-            <div>
+            <div className={style.pagination}>
                 {pages.map((p) => (
                     <span
                         onClick={() => props.setCurrentPage(p)}
