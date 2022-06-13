@@ -19,7 +19,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             </div>
             <div className={style.avaDescriptionWrapper}>
                 <img src={props.profile.photos.small} alt={'no picture'} />
-                description
+                {props.profile.userId}
             </div>
         </div>
     )
