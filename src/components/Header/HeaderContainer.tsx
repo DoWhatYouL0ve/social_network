@@ -12,8 +12,6 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
                 withCredentials: true,
             })
             .then((response) => {
-                // eslint-disable-next-line no-debugger
-                debugger
                 if (response.data.resultCode === 0) {
                     let { id, email, login } = response.data.data
                     this.props.setAuthUserData(id, email, login)
