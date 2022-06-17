@@ -15,6 +15,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<string>
 }
 export type UsersActionType =
     | ReturnType<typeof follow>
@@ -23,6 +24,7 @@ export type UsersActionType =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof setToggleIsFetching>
+    | ReturnType<typeof toggleFollowingInProgress>
 
 export const FOLLOW = 'FOLLOW'
 export const UNFOLLOW = 'UNFOLLOW'
@@ -30,6 +32,7 @@ export const SET_USERS = 'SET_USERS'
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+export const FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS'
 
 const initialState: UsersPageType = {
     users: [],
@@ -37,6 +40,7 @@ const initialState: UsersPageType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: [],
 }
 
 export const usersReducer = (
@@ -66,6 +70,15 @@ export const usersReducer = (
             return { ...state, totalUsersCount: action.totalUsersCount }
         case TOGGLE_IS_FETCHING:
             return { ...state, isFetching: action.isFetching }
+        case FOLLOWING_IN_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.inProgress
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(
+                          (id) => id != action.userId
+                      ),
+            }
         default:
             return state
     }
@@ -82,3 +95,7 @@ export const setTotalUsersCount = (totalUsersCount: number) =>
     ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount } as const)
 export const setToggleIsFetching = (isFetching: boolean) =>
     ({ type: TOGGLE_IS_FETCHING, isFetching } as const)
+export const toggleFollowingInProgress = (
+    inProgress: boolean,
+    userId: string
+) => ({ type: FOLLOWING_IN_PROGRESS, inProgress, userId } as const)
