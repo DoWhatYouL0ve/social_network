@@ -1,3 +1,6 @@
+import { usersAPI } from '../api/api'
+import { Dispatch } from 'redux'
+
 export type UserPhotosType = {
     small: string
     large: string
@@ -84,6 +87,7 @@ export const usersReducer = (
     }
 }
 
+// Action creators
 export const follow = (userId: string) => ({ type: FOLLOW, userId } as const)
 export const unfollow = (userId: string) =>
     ({ type: UNFOLLOW, userId } as const)
@@ -99,3 +103,39 @@ export const toggleFollowingInProgress = (
     inProgress: boolean,
     userId: string
 ) => ({ type: FOLLOWING_IN_PROGRESS, inProgress, userId } as const)
+
+// Thunk creators
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize).then((data) => {
+            dispatch(setToggleIsFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalUsersCount(data.totalCount))
+        })
+    }
+}
+
+export const followTC = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.follow(userId).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(toggleFollowingInProgress(false, userId))
+        })
+    }
+}
+
+export const unfollowTC = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.unFollow(userId).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(unfollow(userId))
+            }
+            dispatch(toggleFollowingInProgress(false, userId))
+        })
+    }
+}
