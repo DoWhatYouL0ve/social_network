@@ -1,3 +1,6 @@
+import { Dispatch } from 'redux'
+import { ProfileAPI } from '../api/api'
+
 export type PostType = {
     id: string
     message: string
@@ -80,5 +83,12 @@ export const profilePageReducer = (
 export const addPostAC = () => ({ type: ADD_POST } as const)
 export const updateNewPostTextAC = (newText: string) =>
     ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
-export const setUserProfile = (profile: ProfileType) =>
+const setUserProfile = (profile: ProfileType) =>
     ({ type: SET_USER_PROFILE, profile } as const)
+
+//Thunks
+export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
+    ProfileAPI.getProfile(userId).then((response) => {
+        dispatch(setUserProfile(response.data))
+    })
+}
