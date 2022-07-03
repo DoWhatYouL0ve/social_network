@@ -3,6 +3,7 @@ import style from './Dialogs.module.css'
 import { DialogItem } from './Dialog/DialogItem'
 import { MessageItem } from './Message/MessageItem'
 import { DialogsPropsType } from './DialogsContainer'
+import { Redirect } from 'react-router-dom'
 
 export const Dialogs = (props: DialogsPropsType) => {
     let dialogsElements = props.dialogsPage.dialogs.map((d) => (
@@ -29,6 +30,8 @@ export const Dialogs = (props: DialogsPropsType) => {
             props.sendMessage()
         }
     }
+
+    if (!props.isAuth) return <Redirect to={'/login'} />
 
     return (
         <div className={style.dialogsPageWrapper}>
