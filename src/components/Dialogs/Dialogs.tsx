@@ -31,8 +31,6 @@ export const Dialogs = (props: DialogsPropsType) => {
         }
     }
 
-    if (!props.isAuth) return <Redirect to={'/login'} />
-
     return (
         <div className={style.dialogsPageWrapper}>
             <div className={style.dialogsSection}>{dialogsElements}</div>
