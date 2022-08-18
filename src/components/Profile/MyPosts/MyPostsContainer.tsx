@@ -22,6 +22,7 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
         profile: state.profilePage.profile,
+        status: state.profilePage.status,
     }
 }
 

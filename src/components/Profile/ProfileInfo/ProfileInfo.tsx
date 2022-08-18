@@ -7,6 +7,8 @@ import { ProfileStatus } from './ProfileStatus'
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -21,7 +23,10 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div className={style.avaDescriptionWrapper}>
                 <img src={props.profile.photos.small} alt={'no picture'} />
                 {props.profile.userId}
-                <ProfileStatus status={'Hello world!'} />
+                <ProfileStatus
+                    status={props.status}
+                    updateUserStatus={props.updateUserStatus}
+                />
             </div>
         </div>
     )

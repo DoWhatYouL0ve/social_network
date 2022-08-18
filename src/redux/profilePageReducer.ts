@@ -10,15 +10,18 @@ export type ProfilePagePostsType = {
     posts: Array<PostType>
     newPostText: string
     profile: ProfileType | null
+    status: string
 }
 export type ProfilePageActionType =
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatusProfile>
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_STATUS_PROFILE = 'SET_STATUS_PROFILE'
 
 type ProfilePhotosType = {
     small: string
@@ -51,6 +54,7 @@ let initialState: ProfilePagePostsType = {
     ],
     newPostText: '',
     profile: null,
+    status: '',
 }
 
 export const profilePageReducer = (
@@ -75,6 +79,11 @@ export const profilePageReducer = (
             return (copyState = { ...state, newPostText: action.newText })
         case SET_USER_PROFILE:
             return { ...state, profile: action.profile }
+        case SET_STATUS_PROFILE:
+            return {
+                ...state,
+                status: action.status,
+            }
         default:
             return state
     }
@@ -85,10 +94,25 @@ export const updateNewPostTextAC = (newText: string) =>
     ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
 const setUserProfile = (profile: ProfileType) =>
     ({ type: SET_USER_PROFILE, profile } as const)
+const setStatusProfile = (status: string) =>
+    ({ type: SET_STATUS_PROFILE, status } as const)
 
 //Thunks
 export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
     ProfileAPI.getProfile(userId).then((response) => {
         dispatch(setUserProfile(response.data))
+    })
+}
+
+export const getUserStatus = (userId: string) => (dispatch: Dispatch) => {
+    ProfileAPI.getStatus(userId).then((response) =>
+        dispatch(setStatusProfile(response.data))
+    )
+}
+export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
+    ProfileAPI.updateStatus(status).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(setStatusProfile(status))
+        }
     })
 }
