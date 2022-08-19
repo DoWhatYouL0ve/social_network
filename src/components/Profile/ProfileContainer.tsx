@@ -20,7 +20,7 @@ class ProfileContainer extends React.Component<WithRouterPropsType> {
             userId = '24010'
         }
         this.props.getUserProfile(userId)
-        //this.props.getUserStatus(userId)
+        this.props.getUserStatus(userId)
     }
 
     render() {

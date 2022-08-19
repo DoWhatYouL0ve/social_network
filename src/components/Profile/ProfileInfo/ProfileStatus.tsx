@@ -31,6 +31,17 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         this.props.updateUserStatus(this.state.temporaryStatus)
     }
 
+    componentDidUpdate(
+        prevProps: Readonly<ProfileStatusPropsType>,
+        prevState: Readonly<{}>
+    ) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                temporaryStatus: this.props.status,
+            })
+        }
+    }
+
     render() {
         return (
             <div>
