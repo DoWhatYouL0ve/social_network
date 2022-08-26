@@ -1,7 +1,6 @@
 export type DialogsPageType = {
     dialogs: DialogsDataType
     messages: MessagesDataType
-    newMessageText: string
 }
 export type DialogsArrayDataType = {
     id: string
@@ -13,11 +12,8 @@ export type MessagesArrayDataType = {
     message: string
 }
 export type MessagesDataType = Array<MessagesArrayDataType>
-export type DialogsPageActionType =
-    | ReturnType<typeof newMessageTextAC>
-    | ReturnType<typeof sendMessageAC>
+export type DialogsPageActionType = ReturnType<typeof sendMessageAC>
 
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 const SEND_MESSAGE = 'SEND_MESSAGE'
 
 let initialState: DialogsPageType = {
@@ -34,7 +30,6 @@ let initialState: DialogsPageType = {
         { id: '3', message: 'Where have you been all this time?' },
         { id: '4', message: 'I just arrived from Miami!' },
     ],
-    newMessageText: '',
 }
 
 export const dialogsPageReducer = (
@@ -48,17 +43,13 @@ export const dialogsPageReducer = (
                 ...state,
                 messages: [
                     ...state.messages,
-                    { id: '5', message: state.newMessageText },
+                    { id: '5', message: action.newMessageText },
                 ],
-                newMessageText: '',
             })
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return (copyState = { ...state, newMessageText: action.newText })
         default:
             return state
     }
 }
 
-export const newMessageTextAC = (newText: string) =>
-    ({ type: UPDATE_NEW_MESSAGE_TEXT, newText } as const)
-export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const)
+export const sendMessageAC = (newMessageText: string) =>
+    ({ type: SEND_MESSAGE, newMessageText } as const)

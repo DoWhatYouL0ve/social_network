@@ -2,6 +2,10 @@ import React from 'react'
 import style from './MyPosts.module.css'
 import { Post } from './Post/Post'
 import { MyPostsPropsType } from './MyPostsContainer'
+import {
+    AddMyPostsFormPropsType,
+    AddMyPostsFormReduxForm,
+} from './MyPostsForm/AddMyPostsForm'
 
 export const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map((p) => (
@@ -13,37 +17,15 @@ export const MyPosts = (props: MyPostsPropsType) => {
         />
     ))
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
-
-    let addNewPost = () => {
-        if (props.newPostText.trim() !== '') {
-            props.addPost()
-        }
-    }
-
-    let onPostChange = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current?.value
-            props.updateNewPostText(text)
-        }
+    const addNewPost = (values: AddMyPostsFormPropsType) => {
+        props.addPost(values.newPostText)
     }
 
     return (
         <div className={style.myPostWrapper}>
             <h3>My posts</h3>
             <div>
-                <div>
-                    <textarea
-                        cols={40}
-                        rows={5}
-                        ref={newPostElement}
-                        value={props.newPostText}
-                        onChange={onPostChange}
-                    />
-                </div>
-                <div>
-                    <button onClick={addNewPost}>Add post</button>
-                </div>
+                <AddMyPostsFormReduxForm onSubmit={addNewPost} />
             </div>
             <div className={style.posts}>{postsElements}</div>
         </div>

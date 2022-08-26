@@ -1,9 +1,12 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import style from './Dialogs.module.css'
 import { DialogItem } from './Dialog/DialogItem'
 import { MessageItem } from './Message/MessageItem'
 import { DialogsPropsType } from './DialogsContainer'
-import { Redirect } from 'react-router-dom'
+import {
+    AddMessageFormReduxForm,
+    DialogsMessageFormDataType,
+} from './DialogsForm/AddMessageForm'
 
 export const Dialogs = (props: DialogsPropsType) => {
     let dialogsElements = props.dialogsPage.dialogs.map((d) => (
@@ -14,21 +17,8 @@ export const Dialogs = (props: DialogsPropsType) => {
         <MessageItem key={m.id} message={m.message} id={m.id} />
     ))
 
-    let newMessageText = props.dialogsPage.newMessageText
-
-    const onMessageTextChangedHandler = (
-        e: ChangeEvent<HTMLTextAreaElement>
-    ) => {
-        if (e.target.value) {
-            let text = e.target.value
-            props.onMessageTextChanged(text)
-        }
-    }
-
-    const sendMessage = () => {
-        if (props.dialogsPage.newMessageText.trim() !== '') {
-            props.sendMessage()
-        }
+    const addNewMessage = (values: DialogsMessageFormDataType) => {
+        props.sendMessage(values.newMessageText)
     }
 
     return (
@@ -37,16 +27,7 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={style.messagesSection}>
                 <div>{messagesElements}</div>
                 <div>
-                    <textarea
-                        placeholder={'Enter your message'}
-                        value={newMessageText}
-                        onChange={onMessageTextChangedHandler}
-                        cols={30}
-                        rows={5}
-                    ></textarea>
-                </div>
-                <div>
-                    <button onClick={sendMessage}>Send</button>
+                    <AddMessageFormReduxForm onSubmit={addNewMessage} />
                 </div>
             </div>
         </div>
