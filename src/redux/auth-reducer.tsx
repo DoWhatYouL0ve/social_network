@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import { authAPI } from '../api/api'
+import { stopSubmit } from 'redux-form'
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -59,6 +60,18 @@ export const login =
             if (response.data.resultCode === 0) {
                 //@ts-ignore
                 dispatch(getAuthUserData())
+            } else {
+                // getting capture error message
+                let errorServerMessage =
+                    response.data.messages.length > 0
+                        ? response.data.messages[0]
+                        : 'Some error'
+                //helps to show error in case email or password is wrong
+                dispatch(
+                    stopSubmit('login', {
+                        _error: errorServerMessage,
+                    })
+                )
             }
         })
     }
