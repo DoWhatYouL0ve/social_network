@@ -15,6 +15,13 @@ import { Users } from './Users'
 import { PreLoader } from '../common/PreLoader'
 import { withAuthRedirect } from '../../Hoc/withAuthRedirect'
 import { compose } from 'redux'
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+} from '../../redux/users-selectors'
 
 class UsersContainer extends React.Component<UsersAPIContainerPropsType> {
     constructor(props: UsersAPIContainerPropsType) {
@@ -77,13 +84,24 @@ export type UsersAPIContainerPropsType = MapStateToPropsType &
 const mapStateToProps = (state: StateType): MapStateToPropsType => {
     return {
         users: state.usersPage,
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
+    }
+}
+
+/*const mapStateToProps = (state: StateType): MapStateToPropsType => {
+    return {
+        users: state.usersPage,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
     }
-}
+}*/
 
 /*export default withAuthRedirect(
     connect(mapStateToProps, {
