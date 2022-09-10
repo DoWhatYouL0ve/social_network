@@ -90,13 +90,13 @@ const setStatusProfile = (status: string) =>
     ({ type: SET_STATUS_PROFILE, status } as const)
 
 //Thunks
-export const getUserProfile = (userId: string) => (dispatch: Dispatch) => {
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     ProfileAPI.getProfile(userId).then((response) => {
         dispatch(setUserProfile(response.data))
     })
 }
 
-export const getUserStatus = (userId: string) => (dispatch: Dispatch) => {
+export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
     ProfileAPI.getStatus(userId).then((response) =>
         dispatch(setStatusProfile(response.data))
     )

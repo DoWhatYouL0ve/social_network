@@ -10,16 +10,16 @@ import {
 } from '../../redux/profilePageReducer'
 import { withRouter } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
-import { withAuthRedirect } from '../../Hoc/withAuthRedirect'
 import { compose } from 'redux'
 
 class ProfileContainer extends React.Component<WithRouterPropsType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId: any = this.props.match.params.userId
         if (!userId) {
-            //@ts-ignore
-            //userId = this.props.authorisedUserId
-            userId = '24010'
+            userId = this.props.id
+            if (!userId) {
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userId)
         this.props.getUserStatus(userId)
@@ -46,13 +46,13 @@ type PathParamsType = {
 type MapStateToPropsType = {
     profile: ProfileType | null
     status: string
-    authorisedUserId: number | null
+    id: number | null
     isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
-    getUserProfile: (userId: string) => void
-    getUserStatus: (userId: string) => void
+    getUserProfile: (userId: number) => void
+    getUserStatus: (userId: number) => void
     updateUserStatus: (status: string) => void
 }
 
@@ -64,16 +64,10 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authorisedUserId: state.auth.id,
+        id: state.auth.id,
         isAuth: state.auth.isAuth,
     }
 }
-
-/*let WithUrlDataContainerComponent = withRouter(ProfileContainer)*/
-
-/*export default withAuthRedirect(
-    connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent)
-)*/
 
 // compose import from redux
 export default compose<React.ComponentType>(
@@ -83,5 +77,4 @@ export default compose<React.ComponentType>(
         updateUserStatus,
     }),
     withRouter
-    //withAuthRedirect
 )(ProfileContainer)

@@ -12,7 +12,7 @@ type InitialStateType = {
 }
 type ActionType = ReturnType<typeof setAuthUserData>
 
-const initialState = {
+const initialState: InitialStateType = {
     id: null,
     email: '',
     login: '',
@@ -25,7 +25,7 @@ export const authReducer = (
 ): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
-            return { ...state, ...action.payload }
+            return { ...state, ...action.payload, id: action.payload.userId }
         default:
             return state
     }
@@ -44,13 +44,12 @@ export const setAuthUserData = (
 }
 
 // Thunk
-export const getAuthUserData = () => (dispatch: Dispatch) => {
-    authAPI.authMe().then((response) => {
-        if (response.data.resultCode === 0) {
-            let { id, email, login } = response.data.data
-            dispatch(setAuthUserData(id, email, login, true))
-        }
-    })
+export const getAuthUserData = () => async (dispatch: Dispatch) => {
+    const res = await authAPI.authMe()
+    if (res.data.resultCode === 0) {
+        let { id, email, login } = res.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
 }
 
 export const login =
