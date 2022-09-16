@@ -1,4 +1,5 @@
 import { StateType } from './redux-store'
+import { createSelector } from 'reselect'
 
 export const getAllUsers = (state: StateType) => {
     return state.usersPage.users
@@ -23,3 +24,8 @@ export const getIsFetching = (state: StateType) => {
 export const getFollowingInProgress = (state: StateType) => {
     return state.usersPage.followingInProgress
 }
+
+// example of reseletor in work, in this case dependency is getAllUsers and if it change we work with it's return value: users array
+export const getUsersSuper = createSelector(getAllUsers, (users) => {
+    return users.filter((u) => true)
+})
