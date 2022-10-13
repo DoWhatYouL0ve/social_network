@@ -17,10 +17,10 @@ export type ProfilePageActionType =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusProfile>
 
-const ADD_POST = 'ADD_POST'
-const DELETE_POST = 'DELETE_POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_STATUS_PROFILE = 'SET_STATUS_PROFILE'
+const ADD_POST = 'social_network/profilePage/ADD_POST'
+const DELETE_POST = 'social_network/profilePage/DELETE_POST'
+const SET_USER_PROFILE = 'social_network/profilePage/SET_USER_PROFILE'
+const SET_STATUS_PROFILE = 'social_network/profilePage/SET_STATUS_PROFILE'
 
 type ProfilePhotosType = {
     small: string
@@ -99,21 +99,20 @@ export const deletePostAC = (postId: string) =>
     ({ type: DELETE_POST, postId } as const)
 
 //Thunks
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    ProfileAPI.getProfile(userId).then((response) => {
+export const getUserProfile =
+    (userId: number) => async (dispatch: Dispatch) => {
+        const response = await ProfileAPI.getProfile(userId)
         dispatch(setUserProfile(response.data))
-    })
-}
+    }
 
-export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
-    ProfileAPI.getStatus(userId).then((response) =>
-        dispatch(setStatusProfile(response.data))
-    )
+export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
+    const response = await ProfileAPI.getStatus(userId)
+    dispatch(setStatusProfile(response.data))
 }
-export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
-    ProfileAPI.updateStatus(status).then((response) => {
+export const updateUserStatus =
+    (status: string) => async (dispatch: Dispatch) => {
+        const response = await ProfileAPI.updateStatus(status)
         if (response.data.resultCode === 0) {
             dispatch(setStatusProfile(status))
         }
-    })
-}
+    }

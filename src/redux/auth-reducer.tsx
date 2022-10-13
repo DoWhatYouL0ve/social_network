@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 import { authAPI } from '../api/api'
 import { stopSubmit } from 'redux-form'
 
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'social_network/auth/SET_USER_DATA'
 
 type InitialStateType = {
     id: number | null
@@ -54,32 +54,30 @@ export const getAuthUserData = () => async (dispatch: Dispatch) => {
 
 export const login =
     (email: string, password: string, rememberMe: boolean) =>
-    (dispatch: Dispatch) => {
-        authAPI.login(email, password, rememberMe).then((response) => {
-            if (response.data.resultCode === 0) {
-                //@ts-ignore
-                dispatch(getAuthUserData())
-            } else {
-                // getting capture error message
-                let errorServerMessage =
-                    response.data.messages.length > 0
-                        ? response.data.messages[0]
-                        : 'Some error'
-                //helps to show error in case email or password is wrong
-                dispatch(
-                    stopSubmit('login', {
-                        _error: errorServerMessage,
-                    })
-                )
-            }
-        })
-    }
-
-export const logout = () => (dispatch: Dispatch) => {
-    authAPI.logout().then((response) => {
+    async (dispatch: Dispatch) => {
+        const response = await authAPI.login(email, password, rememberMe)
         if (response.data.resultCode === 0) {
             //@ts-ignore
-            dispatch(setAuthUserData(null, null, null, false))
+            dispatch(getAuthUserData())
+        } else {
+            // getting capture error message
+            let errorServerMessage =
+                response.data.messages.length > 0
+                    ? response.data.messages[0]
+                    : 'Some error'
+            //helps to show error in case email or password is wrong
+            dispatch(
+                stopSubmit('login', {
+                    _error: errorServerMessage,
+                })
+            )
         }
-    })
+    }
+
+export const logout = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        //@ts-ignore
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }

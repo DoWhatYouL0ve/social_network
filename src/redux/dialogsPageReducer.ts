@@ -14,7 +14,7 @@ export type MessagesArrayDataType = {
 export type MessagesDataType = Array<MessagesArrayDataType>
 export type DialogsPageActionType = ReturnType<typeof sendMessageAC>
 
-const SEND_MESSAGE = 'SEND_MESSAGE'
+const SEND_MESSAGE = 'social_network/dialogsPage/SEND_MESSAGE'
 
 let initialState: DialogsPageType = {
     dialogs: [

@@ -4,20 +4,3 @@
     border-radius: 50%;
 }
 
-.selectedPage {
-    font-weight: bold;
-    color: orangered;
-}
-
-.pageNumber {
-    padding: 10px;
-}
-
-.pageNumber:hover {
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.pagination {
-
-}
