@@ -13,10 +13,12 @@ export type ProfilePagePostsType = {
 }
 export type ProfilePageActionType =
     | ReturnType<typeof addPostAC>
+    | ReturnType<typeof deletePostAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusProfile>
 
 const ADD_POST = 'ADD_POST'
+const DELETE_POST = 'DELETE_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS_PROFILE = 'SET_STATUS_PROFILE'
 
@@ -70,6 +72,11 @@ export const profilePageReducer = (
                 posts: [...state.posts, newPost],
             })
         }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter((i) => i.id !== action.postId),
+            }
         case SET_USER_PROFILE:
             return { ...state, profile: action.profile }
         case SET_STATUS_PROFILE:
@@ -88,6 +95,8 @@ const setUserProfile = (profile: ProfileType) =>
     ({ type: SET_USER_PROFILE, profile } as const)
 const setStatusProfile = (status: string) =>
     ({ type: SET_STATUS_PROFILE, status } as const)
+export const deletePostAC = (postId: string) =>
+    ({ type: DELETE_POST, postId } as const)
 
 //Thunks
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {

@@ -7,7 +7,7 @@ import {
     AddMyPostsFormReduxForm,
 } from './MyPostsForm/AddMyPostsForm'
 
-export const MyPosts = (props: MyPostsPropsType) => {
+export const MyPosts = React.memo((props: MyPostsPropsType) => {
     let postsElements = props.posts.map((p) => (
         <Post
             key={p.id}
@@ -30,4 +30,4 @@ export const MyPosts = (props: MyPostsPropsType) => {
             <div className={style.posts}>{postsElements}</div>
         </div>
     )
-}
+})
