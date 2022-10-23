@@ -1,6 +1,7 @@
 import {
     applyMiddleware,
     combineReducers,
+    compose,
     legacy_createStore as createStore,
     Store,
 } from 'redux'
@@ -21,11 +22,18 @@ let rootReducer = combineReducers({
     form: formReducer,
 })
 
-export type StateType = ReturnType<typeof rootReducer>
-export let store: Store = createStore(
+//@ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export const store: Store = createStore(
     rootReducer,
-    applyMiddleware(thunkMiddleware)
+    composeEnhancers(applyMiddleware(thunkMiddleware))
 )
 
+export type StateType = ReturnType<typeof rootReducer>
+/*export let store: Store = createStore(
+    rootReducer,
+    applyMiddleware(thunkMiddleware)
+)*/
+
 //@ts-ignore
-window.__store__ = store
+//window.__store__ = store
