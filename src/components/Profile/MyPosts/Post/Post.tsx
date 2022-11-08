@@ -12,11 +12,11 @@ export const Post = (props: PostType) => {
     return (
         <div>
             <div className={style.post}>
-                <img src={ava} alt="" />
-                {props.message}
                 <div>
-                    <span>Likes {props.likeCount}</span>
+                    <img src={ava} alt="" />
                 </div>
+                <div className={style.profileMessage}>{props.message}</div>
+                <div className={style.likes}>Likes: {props.likeCount}</div>
             </div>
         </div>
     )

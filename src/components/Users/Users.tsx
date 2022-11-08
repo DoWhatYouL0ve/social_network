@@ -21,7 +21,7 @@ export type UsersPropsType = {
 
 export const Users = (props: UsersPropsType) => {
     return (
-        <div>
+        <div className={style.userWrapper}>
             <Paginator
                 currentPage={props.currentPage}
                 setCurrentPage={props.setCurrentPage}

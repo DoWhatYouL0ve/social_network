@@ -47,9 +47,13 @@ export type ProfileType = {
 
 let initialState: ProfilePagePostsType = {
     posts: [
-        { id: '1', message: "Hi, what's up?", likeCount: 15 },
-        { id: '2', message: "Hello, I'm great and you?", likeCount: 6 },
-        { id: '3', message: 'Perfect!', likeCount: 8 },
+        { id: '1', message: 'Hi, today is a great day!', likeCount: 15 },
+        {
+            id: '2',
+            message: 'Today we are going to the mountains, check it out!',
+            likeCount: 6,
+        },
+        { id: '3', message: 'Happy birthday!', likeCount: 8 },
     ],
     profile: null,
     status: '',
