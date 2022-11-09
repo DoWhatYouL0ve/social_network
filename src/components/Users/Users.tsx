@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { Paginator } from '../common/Paginator/pagination'
 
 export type UsersPropsType = {
-    totalUsersCount: number
+    totalItemsCount: number
     pageSize: number
     currentPage: number
     users: UsersPageType
@@ -25,13 +25,14 @@ export const Users = (props: UsersPropsType) => {
             <Paginator
                 currentPage={props.currentPage}
                 setCurrentPage={props.setCurrentPage}
-                totalUsersCount={props.totalUsersCount}
+                totalItemsCount={props.totalItemsCount}
                 pageSize={props.pageSize}
+                portionSize={10}
             />
             {props.users.users.map((u) => (
-                <div key={u.id}>
+                <div key={u.id} className={style.userContainer}>
                     <span>
-                        <div>
+                        <div className={style.photo}>
                             <NavLink to={`/profile/${u.id}`}>
                                 <img
                                     src={
@@ -72,12 +73,8 @@ export const Users = (props: UsersPropsType) => {
                     </span>
                     <span>
                         <span>
-                            <div>{u.name}</div>
+                            <div className={style.name}>{u.name}</div>
                             <div>{u.status}</div>
-                        </span>
-                        <span>
-                            <div>{'u.location.country'}</div>
-                            <div>{'u.location.city'}</div>
                         </span>
                     </span>
                 </div>

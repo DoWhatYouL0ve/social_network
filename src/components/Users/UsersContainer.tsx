@@ -41,7 +41,7 @@ class UsersContainer extends React.Component<UsersAPIContainerPropsType> {
             <>
                 {this.props.isFetching ? <PreLoader /> : null}
                 <Users
-                    totalUsersCount={this.props.totalUsersCount}
+                    totalItemsCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
                     users={this.props.users}
@@ -91,29 +91,6 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => {
         followingInProgress: getFollowingInProgress(state),
     }
 }
-
-/*const mapStateToProps = (state: StateType): MapStateToPropsType => {
-    return {
-        users: state.usersPage,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
-    }
-}*/
-
-/*export default withAuthRedirect(
-    connect(mapStateToProps, {
-        follow,
-        unfollow,
-        setCurrentPage,
-        toggleFollowingInProgress,
-        getUsers,
-        unfollowTC,
-        followTC,
-    })(UsersContainer)
-)*/
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
