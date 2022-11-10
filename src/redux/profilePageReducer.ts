@@ -16,13 +16,15 @@ export type ProfilePageActionType =
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusProfile>
+    | ReturnType<typeof setPhotoAC>
 
 const ADD_POST = 'social_network/profilePage/ADD_POST'
 const DELETE_POST = 'social_network/profilePage/DELETE_POST'
 const SET_USER_PROFILE = 'social_network/profilePage/SET_USER_PROFILE'
 const SET_STATUS_PROFILE = 'social_network/profilePage/SET_STATUS_PROFILE'
+const SAVE_PHOTO = 'social_network/profilePage/SAVE_PHOTO'
 
-type ProfilePhotosType = {
+export type ProfilePhotosType = {
     small: string
     large: string
 }
@@ -88,6 +90,15 @@ export const profilePageReducer = (
                 ...state,
                 status: action.status,
             }
+        case SAVE_PHOTO:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    //@ts-ignore
+                    photos: action.photo,
+                },
+            }
         default:
             return state
     }
@@ -101,6 +112,8 @@ const setStatusProfile = (status: string) =>
     ({ type: SET_STATUS_PROFILE, status } as const)
 export const deletePostAC = (postId: string) =>
     ({ type: DELETE_POST, postId } as const)
+export const setPhotoAC = (photo: File) =>
+    ({ type: SAVE_PHOTO, photo } as const)
 
 //Thunks
 export const getUserProfile =
@@ -113,6 +126,14 @@ export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
     const response = await ProfileAPI.getStatus(userId)
     dispatch(setStatusProfile(response.data))
 }
+
+export const savePhoto = (photo: File) => async (dispatch: Dispatch) => {
+    const res = await ProfileAPI.savePhoto(photo)
+    if (res.data.resultCode === 0) {
+        dispatch(setPhotoAC(res.data.data.photos))
+    }
+}
+
 export const updateUserStatus =
     (status: string) => async (dispatch: Dispatch) => {
         const response = await ProfileAPI.updateStatus(status)

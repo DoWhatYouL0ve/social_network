@@ -7,6 +7,8 @@ import styles from './Profile.module.css'
 type ProfilePropsType = {
     profile: ProfileType | null
     status: string
+    isOwner: boolean
+    savePhoto: (photo: File) => void
     updateUserStatus: (status: string) => void
 }
 
@@ -17,6 +19,8 @@ export const Profile = (props: ProfilePropsType) => {
                 profile={props.profile}
                 status={props.status}
                 updateUserStatus={props.updateUserStatus}
+                isOwner={props.isOwner}
+                savePhoto={props.savePhoto}
             />
             <MyPostsContainer />
         </div>

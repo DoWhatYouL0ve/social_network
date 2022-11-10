@@ -32,6 +32,15 @@ export const ProfileAPI = {
     updateStatus(newStatus: string) {
         return instance.put(`profile/status/`, { status: newStatus })
     },
+    savePhoto(photo: File) {
+        const formData = new FormData()
+        formData.append('image', photo)
+        // @ts-ignore
+        return instance.put(`profile/photo`, formData, {
+            // @ts-ignore
+            headers: 'Content-Type: multipart/form-data',
+        })
+    },
 }
 
 export const authAPI = {

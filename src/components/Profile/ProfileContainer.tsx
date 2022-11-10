@@ -7,13 +7,14 @@ import {
     ProfileType,
     getUserStatus,
     updateUserStatus,
+    savePhoto,
 } from '../../redux/profilePageReducer'
 import { withRouter } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 import { compose } from 'redux'
 
 class ProfileContainer extends React.Component<WithRouterPropsType> {
-    componentDidMount() {
+    refreshProfile() {
         let userId: any = this.props.match.params.userId
         if (!userId) {
             userId = this.props.id
@@ -25,14 +26,30 @@ class ProfileContainer extends React.Component<WithRouterPropsType> {
         this.props.getUserStatus(userId)
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    /*componentDidUpdate(
+        prevProps: Readonly<WithRouterPropsType>,
+        prevState: Readonly<{}>,
+        snapshot?: any
+    ) {
+        if (this.props.match.params.userId != prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }*/
+
     render() {
         return (
             <>
                 <Profile
                     {...this.props}
+                    isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
                     status={this.props.status}
                     updateUserStatus={this.props.updateUserStatus}
+                    savePhoto={this.props.savePhoto}
                 />
             </>
         )
@@ -54,6 +71,7 @@ type MapDispatchToPropsType = {
     getUserProfile: (userId: number) => void
     getUserStatus: (userId: number) => void
     updateUserStatus: (status: string) => void
+    savePhoto: (photo: File) => void
 }
 
 type ProfileContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -75,6 +93,7 @@ export default compose<React.ComponentType>(
         getUserProfile,
         getUserStatus,
         updateUserStatus,
+        savePhoto,
     }),
     withRouter
 )(ProfileContainer)
