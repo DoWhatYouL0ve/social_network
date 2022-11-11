@@ -3,8 +3,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 200px;
-    height: 300px;
+    width: 350px;
+    height: 500px;
     background: rgba(255, 255, 255, 0.8);
     text-align: center;
 }
@@ -39,18 +39,45 @@ input[type='file'] {
     background-color: white;
     width: 100px;
     border-radius: 10px;
-    margin: 0 auto 50px;
+    margin: 0 auto 20px;
 }
 
 .profileInfoBackground img{
     max-width: 1000px;
-    height: 300px;
+    height: 500px;
 }
 
 .profileStatusWrapper {
     font-weight: bold;
     font-size: 20px;
+    margin-bottom: 20px;
 }
 .profileStatusWrapper:hover {
     cursor: pointer;
+}
+
+.accountInfo {
+    text-align: left;
+}
+
+.accountInfo b {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.contactsInfoWrapper {
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.contactsInfoWrapper:last-child {
+    margin-bottom: 10px;
+}
+
+.lookingForAJob {
+    margin-bottom: 10px;
+}
+
+.description {
+    margin-bottom: 10px;
 }

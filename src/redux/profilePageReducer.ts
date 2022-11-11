@@ -43,6 +43,7 @@ export type ProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
+    AboutMe: string
     contacts: ProfileContactType
     photos: ProfilePhotosType
 }
@@ -139,5 +140,15 @@ export const updateUserStatus =
         const response = await ProfileAPI.updateStatus(status)
         if (response.data.resultCode === 0) {
             dispatch(setStatusProfile(status))
+        }
+    }
+
+export const setUserProfileData =
+    (profile: ProfileType) => async (dispatch: Dispatch, getState: any) => {
+        const userId = getState().auth.id
+        const response = await ProfileAPI.setUserProfileData(profile)
+        if (response.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getUserProfile(userId))
         }
     }
