@@ -9,7 +9,12 @@ type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const Login = (props: LoginPropsType) => {
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(
+            formData.email,
+            formData.password,
+            formData.rememberMe,
+            formData.capture
+        )
     }
 
     if (props.isAuth) {
@@ -19,19 +24,26 @@ const Login = (props: LoginPropsType) => {
     return (
         <>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} />
+            {/*//@ts-ignore*/}
+            <LoginReduxForm onSubmit={onSubmit} capture={props.capture} />
         </>
     )
 }
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (
+        email: string,
+        password: string,
+        rememberMe: boolean,
+        capture: string
+    ) => void
 }
 
 type MapStateToPropsType = {
     isAuth: boolean
+    capture: string | null
 }
 const mapToStateToProps = (state: StateType): MapStateToPropsType => {
-    return { isAuth: state.auth.isAuth }
+    return { isAuth: state.auth.isAuth, capture: state.auth.capture }
 }
 
 export const LoginContainer = connect(mapToStateToProps, { login })(Login)

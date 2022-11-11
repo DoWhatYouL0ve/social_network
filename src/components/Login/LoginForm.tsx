@@ -8,14 +8,18 @@ export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    capture: string
 }
 
 const maxLength30 = maxLengthCreator(30)
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({
-    handleSubmit,
-    error,
-}) => {
+type AdditionalPropsType = {
+    capture: string
+}
+
+type PropsType = AdditionalPropsType & InjectedFormProps<FormDataType>
+
+const LoginForm: React.FC<PropsType> = ({ handleSubmit, error, capture }) => {
     return (
         <form action="" onSubmit={handleSubmit}>
             <div>
@@ -40,6 +44,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({
                 <Field type="checkbox" component={Input} name={'rememberMe'} />{' '}
                 - remember me
             </div>
+            {capture && <img src={capture} alt="" />}
             {error && <div className={styles.formDataError}>{error}</div>}
             <div>
                 <button>Login</button>
@@ -50,4 +55,5 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({
 
 export const LoginReduxForm = reduxForm<FormDataType>({
     form: 'login',
+    //@ts-ignore
 })(LoginForm)
