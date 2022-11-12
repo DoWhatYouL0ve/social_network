@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import './App.css'
 import { Navbar } from './components/Nav/Navbar'
-import { Route, withRouter } from 'react-router-dom'
+import { Redirect, Route, withRouter } from 'react-router-dom'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
@@ -45,6 +45,10 @@ class App extends React.Component<AppType> {
                 <Navbar />
                 <div className="appWrapperContent">
                     <Route
+                        path={'/'}
+                        render={() => <Redirect to={'/profile'} />}
+                    />
+                    <Route
                         path={'/profile/:userId?'}
                         render={() => (
                             <Suspense fallback={<div>Loading...</div>}>
@@ -68,6 +72,10 @@ class App extends React.Component<AppType> {
                     <Route path={'/music'} render={() => <Music />} />
                     <Route path={'/settings'} render={() => <Settings />} />
                     <Route path={'/login'} render={() => <LoginContainer />} />
+                    <Route
+                        path={'/*'}
+                        render={() => <div>404 Page not found</div>}
+                    />
                 </div>
             </div>
         )
